@@ -113,6 +113,7 @@ public $categories,$users;
            
          if(Auth::check()){
              $tasks->title = $this->edit_title;
+             $tasks->status = $this->edit_status;
              $tasks->cat_id = $this->edit_cat_id;
              $tasks->user_id = $this->edit_user_id;
              $tasks->description = $this->edit_description;

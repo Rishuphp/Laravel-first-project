@@ -30,6 +30,10 @@ public $edit_status;
 public $edit_start_date;
 public $edit_end_date;
 
+
+
+public $details_task;
+public $details_user;
 public $categories,$users;
 
  use WithPagination;
@@ -40,10 +44,10 @@ public $categories,$users;
     {
         $this->users=User::all();
         $this->categories=Category::all();
-        if(Auth::guard('admin')->user()){
+        if(!Auth::guard('admin')->user()){
 
-            if(Auth::user()->id){
-                   $tasks = ModelsTask::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(3);
+            if(!Auth::user()->id){
+                   $tasks = ModelsTask::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
             return view('livewire.admin.task', ['tasks'=>$tasks])->layout('Layout.admin-app');
             }
         }
@@ -68,6 +72,8 @@ public $categories,$users;
             $this-> edit_status ="";
             $this-> edit_start_date ="";
             $this-> edit_end_date ="";
+
+           
     }
 
     public function store(){
@@ -85,8 +91,8 @@ public $categories,$users;
 
         $tasks = ModelsTask::create($validated);
         if($tasks){
-            $this->dispatch('addTask');
             $this->resetField();
+            $this->dispatch('addTask');
         }
     }
     public function editTask($id) 
@@ -104,18 +110,24 @@ public $categories,$users;
 
     public function update($id) {
          $tasks = ModelsTask::findOrFail($id);
-         
+           
          if(Auth::check()){
+             $tasks->title = $this->edit_title;
+             $tasks->cat_id = $this->edit_cat_id;
+             $tasks->user_id = $this->edit_user_id;
+             $tasks->description = $this->edit_description;
+             $tasks->start_date = $this->edit_start_date;
+             $tasks->end_date = $this->edit_end_date;
              $result=$tasks->save();
-             $tasks->status = $this->edit_status;
        
-        if($tasks){
+        if($result){
             $this->resetField();
             $this->dispatch('updateTask');
         }
-
+    
         }else{
-            $validated= $this->validate([
+           
+            $validate= $this->validate([
        
             'edit_cat_id' => 'required',
             'edit_user_id' => 'required',
@@ -123,7 +135,7 @@ public $categories,$users;
             'edit_description' => 'required',
             'edit_status' => 'required',
             'edit_start_date' => 'required',
-            'edit_end_date' => 'required'
+            'edit_end_date' => 'required',
 
         ]);
         
@@ -141,11 +153,40 @@ $result=$tasks->save();
             $this->resetField();
             $this->dispatch('updateTask');
         }
-        }
+        
+    }
         
           
 
     }
+   public function TaskDetails($id)
+{
+   $tasks = ModelsTask::findOrFail($id);
+
+    $isAdmin = Auth::guard('admin')->check();
+    $isUser = Auth::check() && Auth::id() === $tasks->user_id;
+
+    if ($isAdmin || $isUser) {
+        $this->details_task = $tasks;
+        $this->details_user = User::find($tasks->user_id);
+    } else {
+       $isAdmin = Auth::guard('admin')->check();
+    $isUser = Auth::check() && Auth::id() === $tasks->user_id;
+
+    if ($isAdmin || $isUser) {
+        $this->details_task = $tasks;
+        $this->details_user = User::find($tasks->user_id);
+        abort(403, ' You are not authorized to view this task.');
+    }
+}
+    if ($isAdmin || $isUser) {
+    $this->details_task = $tasks;
+    $this->details_user = User::find($tasks->user_id);
+    $this->dispatch('TaskDetails');
+}
+
+}
+
 
 public function deleteTask($id)
     {

@@ -7,6 +7,9 @@
     <div class="card my-4">
         <div class="card-header">
             <h3>Edit Profile</h3>
+            <a href="{{ url()->previous() }}" class="btn btn-primary lg-6 ms-2 ">
+        Back
+   </a>
         </div>
        <div class="card-body">
           <form action="" wire:submit.prevent="update">
@@ -66,7 +69,29 @@
    </div>
    <!-- Button trigger modal -->
 
+ @if(session()->has('success'))
+   <script>
+command:toastr['success']("{!! session('success') !!}}")
 
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-full-width",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+</script>
+@endif
 <!-- Modal -->
 
 

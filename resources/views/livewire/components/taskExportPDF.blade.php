@@ -1,5 +1,5 @@
 
-
+<div id="printableArea" style="display:none">
 <h1>Tasks</h1>
                 <table style="width: 100%; border:1px solid black">
                     <thead>
@@ -18,10 +18,8 @@
                            <td style=" border:1px solid black;text-align:center">{{$task->id}}</td>
                             <td style=" border:1px solid black;text-align:center">{{$task->title}}</td>
                             <td style=" border:1px solid black;text-align:center">
-                                {{$task->status == 0 ? 'Not Started' : ''}}
-                              {{$task->status == 1 ? 'Started' : ''}}
-                              {{$task->status == 2 ? 'Complete' : ''}}
-                              {{$task->status == 3 ? 'Pending' : ''}}
+                                {{$task->status }}
+                             
                             </td>
                            
                             <td style=" border:1px solid black;text-align:center">{{$task->users->fname}} {{$task->users->lname}}</td>
@@ -37,7 +35,7 @@
                     </tbody>
                 </table>
           
-       
+</div>
 
   
    <!-- Button trigger modal -->

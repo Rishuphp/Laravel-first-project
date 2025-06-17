@@ -13,9 +13,9 @@ class TaskExportPDF extends Controller
         return view('livewire.components.taskExportPDF',compact('tasks'));
     }
 
-  public function exportPDF() {
-    $tasks = Task::all();
-    $pdf = PDF::loadView('livewire.components.taskExportPDF', compact('tasks'));
-    return $pdf->download('task' . rand(1,1000) . '.pdf');
-}
+    public function exportPDF() {
+        $tasks = Task::all();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('livewire.components.taskPDF', compact('tasks'));
+        return $pdf->download('task' . rand(1,1000) . '.pdf');
+    }
 }

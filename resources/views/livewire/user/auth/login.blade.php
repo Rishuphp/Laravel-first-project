@@ -32,9 +32,11 @@ Login
                             @enderror
                         </div>
                         <div class="form-group py-2">
-                            <button class="btn btn-danger">Login</button>
+                            <button type="submit" class="btn btn-danger">Login</button>
                         </div>
-                        </form>
+                    </form>
+                    <a href="">
+                    <button type="submit" class="btn btn-danger">Resister</button></a>
                     </div>
                 </div>
             </div>

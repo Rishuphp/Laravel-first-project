@@ -9,7 +9,7 @@
          <div class="modal-body">
            <div class="form-group">
         <label for="">Enter Title</label>
-        <input type="text" disabled wire:model.lazy="edit_title" class="form-control" >
+        <input type="text" disabled  wire:model.lazy="edit_title" class="form-control" >
          @error('edit_title')
         <span class="text-danger">{{$message}}</span>
         @enderror
@@ -30,7 +30,7 @@
       </div>
       <div class="form-group">
         <label for="">Enter Description</label>
-        <textarea disabled wire:model.lazy="edit_description" cols="30" rows="5" class="form-control"></textarea>
+        <textarea  wire:model.lazy="edit_description" cols="30" rows="5" class="form-control"></textarea>
          @error('edit_description')
         <span class="text-danger">{{$message}}</span>
         @enderror
@@ -38,10 +38,10 @@
        <div class="form-group">
         <label for="">Enter Status</label>
         <select  wire:model.lazy="edit_status" class="form-control">
-            <option value="0">Not Started</option>
-            <option value="1">Started</option>
-            <option value="2">Complete</option>
-            <option value="3">Pending</option>
+            <option value="Not Started">Not Started</option>
+            <option value="Started">Started</option>
+            <option value="Complete">Complete</option>
+            <option value="Pending">Pending</option>
         </select>
          @error('edit_status')
         <span class="text-danger">{{$message}}</span>
@@ -49,14 +49,14 @@
       </div>
        <div class="form-group">
         <label for="">Enter Start Date</label>
-        <input type="date" disabled wire:model.lazy="edit_start_date" class="form-control form-control-lg" >
+        <input type="date"   wire:model.lazy="edit_start_date" class="form-control form-control-lg" >
          @error('edit_start_date')
         <span class="text-danger">{{$message}}</span>
         @enderror
       </div>
        <div class="form-group">
         <label for="">Enter End Date</label>
-        <input type="date" disabled wire:model.lazy="edit_end_date" class="form-control form-control-lg" >
+        <input type="date"  wire:model.lazy="edit_end_date" class="form-control form-control-lg" >
          @error('edit_end_date')
         <span class="text-danger">{{$message}}</span>
         @enderror

@@ -38,10 +38,10 @@
        <div class="form-group">
         <label for="">Enter Status</label>
         <select wire:model.lazy="edit_status" class="form-control">
-            <option value="0">Not Started</option>
-            <option value="1">Started</option>
-            <option value="2">Complete</option>
-            <option value="3">Pending</option>
+            <option value="Not Started">Not Started</option>
+            <option value="Started">Started</option>
+            <option value="Complete">Complete</option>
+            <option value="Pending">Pending</option>
         </select>
          @error('edit_status')
         <span class="text-danger">{{$message}}</span>

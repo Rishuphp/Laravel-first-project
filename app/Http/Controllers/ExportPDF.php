@@ -3,21 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
- use Barryvdh\DomPDF\Facade\Pdf;
-
 
 class ExportPDF extends Controller
 {
-    public function index() {
-        $categories=Category::get();
-        return view('livewire.components.exportPDF',compact('categories'));
+     public function index() {
+        $users=Category::get();
+        return view('livewire.components.ExportPDF',compact('tasks'));
     }
 
   public function exportPDF() {
-    $categories = Category::all();
-    $pdf = pdf::loadView('livewire.components.exportPDF', compact('categories'));
-    return $pdf->download('Category' . rand(1,1000) . '.pdf');
+    $users = Category::all();
+    $pdf = Pdf::loadView('livewire.components.ExportPDF', compact('tasks'));
+    return $pdf->download('task' . rand(1,1000) . '.pdf');
 }
-
 }

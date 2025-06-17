@@ -6,6 +6,7 @@
 
    @include ('livewire.components.create')
    @include ('livewire.components.updateCategory')
+   @include ('livewire.components.exportPDF')
 
    <div class="container">
     <div class="card my-4">
@@ -16,14 +17,21 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="d-flex my-2">
-                @if(Auth::guard('admin')->user())
-                <a href="">
-                <button class="btn btn-secondary" >PDF</button>
-                </a>
-                <button class="btn btn-secondary ms-3">Print</button>
+          <div class="d-flex my-2">
+                 @if(Auth::guard('admin')->user()) 
+             <a href="">
+  <button class="btn btn-secondary">PDF</button>
+</a>
+
+              
+               <button onclick="printSection('printableArea')" class="btn btn-secondary ms-3">Print</button>
+             
                 @endif
+                   <a href="{{ url()->previous() }}" class="btn btn-secondary ms-3 ">
+     Back
+</a>
             </div>
+           
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -90,6 +98,18 @@ toastr.options = {
 </script>
 @endif
 <!-- Modal -->
-
+<script>
+    function printSection(divId) {
+        var content = document.getElementById(divId).innerHTML;
+        var win = window.open('', '', 'height=700,width=900');
+        win.document.write('<html><head><title>Print</title>');
+        win.document.write('<style>table, th, td { border:1px solid black; border-collapse: collapse; padding:6px; }</style>');
+        win.document.write('</head><body >');
+        win.document.write(content);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.print();
+    }
+</script>
 
 </div>

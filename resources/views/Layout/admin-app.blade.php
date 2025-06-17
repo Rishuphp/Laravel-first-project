@@ -11,7 +11,7 @@
             @else
             Admin
             @endif
-            - {{$title}}
+          
         </title>
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" >
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
@@ -34,7 +34,7 @@
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <a href="https://www.bytosoft.com" style="text-decoration: none;">
-                                <div class="text-muted " >Daveloped By BYTOSOFT</div>
+                                <div class="text-muted " >Developed By BYTOSOFT</div>
                             </a>
                         </div>
                     </div>
@@ -51,42 +51,52 @@
                  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"crossorigin="anonymous"></script>
 
                    @livewireScripts
-                 <script>
-                     
-                     document.addEventListener('DOMContentLoaded', function () {
-                         window.livewire.on('addCategory', function () {
-                             $('#addCategory').modal('hide');
-                            });
-                        });
-                        
-                        document.addEventListener('DOMContentLoaded', function () {
-                            window.livewire.on('updateCategory', function () {
-                                $('#updateCategory').modal('hide');
-        });
-    });
-                document.addEventListener('DOMContentLoaded', function () {
-                    window.livewire.on('addUser', function () {
-                        $('#addUser').modal('hide');
-                    });
-                });
-                document.addEventListener('DOMContentLoaded', function () {
-                    window.livewire.on('updateUser', function () {
-                        $('#updateUser').modal('hide');
-                    });
-    });
-                 document.addEventListener('DOMContentLoaded', function () {
-        window.livewire.on('addTask', function () {
-            $('#addTask').modal('hide');
-        });
-    });
+               <script>
     document.addEventListener('DOMContentLoaded', function () {
-        window.livewire.on('updateTask', function () {
-            $('#updateTask').modal('hide');
+        if (window.livewire) {
+            const hideModal = (modalId) => {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    // Bootstrap 5 modal hide
+                    const modalInstance = bootstrap.Modal.getInstance(modal);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+                }
+            };
+
+            window.livewire.on('addCategory', () => hideModal('addCategory'));
+            window.livewire.on('updateCategory', () => hideModal('updateCategory'));
+            window.livewire.on('addUser', () => hideModal('addUser'));
+            window.livewire.on('updateUser', () => hideModal('updateUser'));
+            window.livewire.on('addTask', () => hideModal('addTask'));
+            window.livewire.on('updateTask', () => hideModal('updateTask'));
+            window.livewire.on('addAdmin', () => hideModal('addAdmin'));
+            window.livewire.on('TaskDetails', () => hideModal('TaskDetails'));
+            window.livewire.on('userTaskDetails', () => hideModal('userTaskDetails'));
+        }
+    });
+      window.livewire.on('TaskDetails', () => {
+        $('#TaskDetails').modal('show');
+    });
+     window.livewire.on('userTaskDetails', () => {
+        $('#userTaskDetails').modal('show');
+    });
+    document.addEventListener('livewire:load', function () {
+        window.livewire.on('showTaskDetailsModal', () => {
+            const modal = new bootstrap.Modal(document.getElementById('TaskDetails'));
+            modal.show();
         });
     });
-    
-    
-    </script>
+ document.addEventListener('livewire:load', function () {
+        window.livewire.on('showTaskDetailsModal', () => {
+            const modal = new bootstrap.Modal(document.getElementById('userTaskDetails'));
+            modal.show();
+        });
+    });
+
+</script>
+
   
       
 </body>
